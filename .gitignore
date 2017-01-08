@@ -1,0 +1,4 @@
+/.idea/
+/vendor/
+/spec/var/
+/spec/mySqlConnectionData.php

@@ -1,0 +1,22 @@
+{
+	"name": "tueena-lib/sql",
+	"description": "A (very restricted) wrapper around PDO to make database access mockable in unit tests.",
+	"type": "library",
+	"license": "MIT",
+	"require": {
+		"php": ">=7.0.0",
+		"ext-pdo": "*"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^5.7"
+	},
+	"authors": [
+		{
+			"name": "Bastian Fenske",
+			"email": "bastian.fenske@tueena.org"
+		}
+	],
+	"autoload": {
+		"psr-4": {"tueenaLib\\sql\\": "source/"}
+	}
+}
