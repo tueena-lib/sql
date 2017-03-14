@@ -205,7 +205,7 @@ class Sql implements ISql
 
 	private function validateQueryType(string $query, string $expectedType)
 	{
-		if (stripos($query, $expectedType . ' ') !== 0)
+		if (stripos(ltrim($query), $expectedType) !== 0)
 			throw new \Exception('The passed in query is not a ' . $expectedType . ' query.');
 	}
 
