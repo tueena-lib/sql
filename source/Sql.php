@@ -106,6 +106,18 @@ class Sql implements ISql
 		return new DeleteResult($result->rowCount());
 	}
 
+	/**
+	 * @param string $query
+	 * @param array $parameters
+	 * @param Transaction|null $transaction
+	 * @return null
+	 */
+	public function execute(string $query, array $parameters = [], Transaction $transaction = null)
+	{
+		$this->validateTransaction($transaction);
+		$this->executeQuery($query, $parameters);
+	}
+
 	public function selectWithPreparedStatement(PreparedStatement $preparedStatement, array $parameters = [], Transaction $transaction = null): ISelectResult
 	{
 		$this->validateQueryType($preparedStatement->getQuery(), 'SELECT');
@@ -137,6 +149,12 @@ class Sql implements ISql
 		return new DeleteResult($result->rowCount());
 	}
 
+	public function executeWithPreparedStatement(PreparedStatement $preparedStatement, array $parameters = [], Transaction $transaction = null)
+	{
+		$this->validateTransaction($transaction);
+		$this->executePreparedStatement($preparedStatement, $parameters);
+	}
+
 	private function getPdo()
 	{
 		if (is_null($this->pdo))
@@ -144,7 +162,7 @@ class Sql implements ISql
 		return $this->pdo;
 	}
 
-	private function executeQuery(string $query, array $parameters)
+	private function executeQuery(string $query, array $parameters): \PDOStatement
 	{
 		return $this->getPdo()->query($this->buildQuery($query, $parameters));
 	}

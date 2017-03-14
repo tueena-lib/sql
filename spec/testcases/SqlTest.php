@@ -15,7 +15,6 @@ namespace tueenaLib\loader\spec;
 use tueenaLib\sql\drivers\MySqlDriver;
 use tueenaLib\sql\PreparedStatement;
 use tueenaLib\sql\Sql;
-use tueenaLib\sql\Transaction;
 
 class SqlTest extends \PHPUnit_Framework_TestCase
 {
@@ -157,5 +156,22 @@ class SqlTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(2, $resultAfterCommit->getNumRows());
 		$this->assertEquals(['1', 'myUpdatedFirstValue'], $resultAfterCommit->fetchNumeric());
 		$this->assertEquals(['3', 'mySecondValue'], $resultAfterCommit->fetchNumeric());
+	}
+
+
+	/**
+	 * @test
+	 */
+	public function The_execute_method_can_execute_all_queries()
+	{
+		list($hostName, $port, $userName, $password, $databaseName) = self::getConnectionData();
+		$driver = new MySqlDriver($hostName, $userName, $password, $databaseName, $port);
+		$sql = new Sql($driver);
+
+		$sql->execute('SET @foo = :foo', ['foo' => 42]);
+		$preparedStatement = new PreparedStatement('SET @bar = :bar');
+		$sql->executeWithPreparedStatement($preparedStatement, ['bar' => 43]);
+		$result = $sql->select('SELECT @foo, @bar');
+		$this->assertEquals(['@foo' => '42', '@bar' => 43], $result->fetchAssoc());
 	}
 }

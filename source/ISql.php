@@ -26,9 +26,11 @@ interface ISql
 	public function insert(string $query, array $parameters = [], Transaction $transaction = null): IInsertResult;
 	public function update(string $query, array $parameters = [], Transaction $transaction = null): IUpdateResult;
 	public function delete(string $query, array $parameters = [], Transaction $transaction = null): IDeleteResult;
+	public function execute(string $query, array $parameters = [], Transaction $transaction = null);
 
 	public function selectWithPreparedStatement(PreparedStatement $preparedStatement, array $parameters = [], Transaction $transaction = null): ISelectResult;
 	public function insertWithPreparedStatement(PreparedStatement $preparedStatement, array $parameters = [], Transaction $transaction = null): IInsertResult;
 	public function updateWithPreparedStatement(PreparedStatement $preparedStatement, array $parameters = [], Transaction $transaction = null): IUpdateResult;
 	public function deleteWithPreparedStatement(PreparedStatement $preparedStatement, array $parameters = [], Transaction $transaction = null): IDeleteResult;
+	public function executeWithPreparedStatement(PreparedStatement $preparedStatement, array $parameters = [], Transaction $transaction = null);
 }
