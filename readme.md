@@ -56,8 +56,8 @@ MIT
 
 Requirements
 ------------
-php >= 7.0.0
-pdo
+* php >= 7.0.0
+* pdo
 
 Installation
 ------------
